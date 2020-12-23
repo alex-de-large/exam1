@@ -1,5 +1,9 @@
 package com.example.exam01.model;
 
+
+/**
+ * Класс для хранения параметров доступных автомобилей
+ */
 public class Car {
     private String id;
     private String model;

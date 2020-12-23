@@ -25,7 +25,9 @@ import java.util.List;
 
 public class MapsFragment extends Fragment {
 
+    private GoogleMap map;
     private List<Car> cars;
+    private ArrayList<Marker> carMarkers;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -35,15 +37,34 @@ public class MapsFragment extends Fragment {
             googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+            map = googleMap;
+
             cars = Data.get().getCars();
+            carMarkers = new ArrayList<>();
             if (cars != null) {
                 for (Car car : cars) {
                     Marker marker = googleMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.car_yellow))
                             .anchor(0.5f, 1)
                             .position(new LatLng(Double.parseDouble(car.getLat()), Double.parseDouble(car.getLon()))));
+                    carMarkers.add(marker);
                 }
             }
+
+            map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    for (int i = 0; i < carMarkers.size(); i++) {
+                        Marker m = carMarkers.get(i);
+                        if (m.equals(marker)) {
+                            m.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.car_purple));
+                        } else {
+                            m.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.car_yellow));
+                        }
+                    }
+                    return true;
+                }
+            });
         }
     };
 

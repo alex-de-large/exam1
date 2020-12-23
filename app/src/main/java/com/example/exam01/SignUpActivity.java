@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.exam01.api.API;
 import com.example.exam01.api.OnResponseListener;
 import com.example.exam01.api.Requests;
 
@@ -46,19 +47,16 @@ public class SignUpActivity extends AppCompatActivity implements OnResponseListe
                 String p1 = pass1EditText.getText().toString();
                 String p2 = pass2EditText.getText().toString();
                 if (!p1.equals(p2)) {
-                    Toast.makeText(SignUpActivity.this, "Password don`t match!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpActivity.this, "Passwords don`t match!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                try {
-                    JSONObject data = new JSONObject();
-                    data.put("username", loginEditText.getText().toString());
-                    data.put("email", emailEditText.getText().toString());
-                    data.put("password", p1);
-                    requests.post("http://car.areas.su/signup", data, REQUEST_SIGN_UP);
-                } catch (Exception exception) {
-
-                }
+                API.signup(
+                        loginEditText.getText().toString(),
+                        emailEditText.getText().toString(),
+                        p1,
+                        SignUpActivity.this,
+                        REQUEST_SIGN_UP);
 
 
             }
@@ -89,6 +87,6 @@ public class SignUpActivity extends AppCompatActivity implements OnResponseListe
 
     @Override
     public void onResponseError(VolleyError error, int requestCode) {
-        Toast.makeText(SignUpActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
     }
 }

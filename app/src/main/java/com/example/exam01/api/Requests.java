@@ -17,15 +17,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+
+/**
+ * Класс предназначен для содания и отправки HTTP-запросов
+ */
 public class Requests {
 
+    /** Очередь запросов*/
     private static RequestQueue requestQueue;
+    /** Интерфейс-обработчик */
     private OnResponseListener listener;
 
     public Requests(OnResponseListener listener) {
         this.listener = listener;
     }
 
+    /* статический блок, предназначенный для инциализации очереди */
     static {
         Cache cache = new DiskBasedCache(App.getContext().getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
@@ -33,6 +40,11 @@ public class Requests {
         requestQueue.start();
     }
 
+    /**
+     * Метод для получения ответа на get запрос по указанному url
+     * @param url адрес API
+     * @param requestCode код запроса
+     */
     public void get(String url, int requestCode) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -62,6 +74,12 @@ public class Requests {
         requestQueue.add(stringRequest);
     }
 
+    /**
+     * Метод для получения ответа на post запрос по указанному url
+     * @param url адрес API
+     * @param data прикрепляемые к запросу данные
+     * @param requestCode код запроса
+     */
     public void post(String url, JSONObject data, int requestCode) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 url, data,

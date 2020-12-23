@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.exam01.api.API;
 import com.example.exam01.api.Data;
 import com.example.exam01.api.OnResponseListener;
 import com.example.exam01.api.Requests;
@@ -37,7 +38,7 @@ public class SignInActivity extends AppCompatActivity implements OnResponseListe
         setContentView(R.layout.activity_sign_in);
 
         requests = new Requests(this);
-        logout();
+        API.logout("rofl", this, REQUEST_LOGOUT);
 
         loginEditText = findViewById(R.id.login_edit_text);
         passwordEditText = findViewById(R.id.password_edit_text);
@@ -47,15 +48,10 @@ public class SignInActivity extends AppCompatActivity implements OnResponseListe
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-
-                    JSONObject data = new JSONObject();
-                    data.put("username", loginEditText.getText().toString());
-                    data.put("password", passwordEditText.getText().toString());
-                    requests.post("http://cars.areas.su/login", data, REQUEST_LOGIN);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                API.login(loginEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        SignInActivity.this,
+                        REQUEST_LOGIN);
             }
         });
 
@@ -68,16 +64,6 @@ public class SignInActivity extends AppCompatActivity implements OnResponseListe
         });
     }
 
-    private void logout() {
-        try {
-            JSONObject data = new JSONObject();
-            data.put("username", "rofl");
-            requests.post("http://cars.areas.su/logout", data, REQUEST_LOGOUT );
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
-    }
-
     @Override
     public void onResponse(JSONObject jsonObject, int requestCode) {
         if (requestCode == REQUEST_LOGIN) {
@@ -87,6 +73,7 @@ public class SignInActivity extends AppCompatActivity implements OnResponseListe
                 if (notice.has("token")) {
                     Data data = Data.get();
                     data.setToken(notice.getString("token"));
+                    data.setUsername(loginEditText.getText().toString());
                     startActivity(new Intent(SignInActivity.this, NavActivity.class));
                 } else if (notice.has("answer")) {
                     Toast.makeText(this, notice.getString("answer"), Toast.LENGTH_SHORT).show();

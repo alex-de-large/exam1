@@ -4,6 +4,9 @@ import com.example.exam01.model.Car;
 
 import java.util.List;
 
+/**
+ * Класс для хранения данных о пользователе
+ */
 public class Data {
 
     private String token;

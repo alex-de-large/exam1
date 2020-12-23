@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.exam01.api.API;
 import com.example.exam01.api.Data;
 import com.example.exam01.api.OnResponseListener;
 import com.example.exam01.api.Requests;
@@ -38,7 +39,6 @@ public class NavActivity extends AppCompatActivity implements OnResponseListener
     private final static int REQUEST_LOGOUT = 2;
 
     private ArrayList<Car> cars;
-    private Requests requests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +47,8 @@ public class NavActivity extends AppCompatActivity implements OnResponseListener
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        requests = new Requests(this);
         cars = new ArrayList<>();
-        requests.get("http://cars.areas.su/cars", REQUEST_CARS);
+        API.cars(this, REQUEST_CARS);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -135,5 +134,11 @@ public class NavActivity extends AppCompatActivity implements OnResponseListener
     @Override
     public void onResponseError(VolleyError error, int requestCode) {
         Toast.makeText(NavActivity.this, R.string.error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        API.logout(Data.get().getUsername(), this, REQUEST_LOGOUT);
     }
 }
