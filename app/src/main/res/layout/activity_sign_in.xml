@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignInActivity"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="@drawable/sign_in_bg"
+    android:gravity="center_horizontal|bottom">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:elevation="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_person"
+            android:padding="18dp"/>
+
+        <FrameLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#E2E2E2"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/login_edit_text"
+            android:layout_marginHorizontal="15dp"
+            android:hint="Ivanov.I"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:elevation="5dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_secure"
+            android:padding="18dp"/>
+
+        <FrameLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#E2E2E2"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:id="@+id/password_edit_text"
+            android:layout_marginHorizontal="15dp"
+            android:hint="••••••"
+            android:inputType="textPassword"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password ?"
+        android:textColor="#A5A5A5"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="sign in"
+        android:textColor="@color/white"
+        android:background="#4254BC"
+        android:id="@+id/sign_in_button"
+        android:layout_marginBottom="98dp"/>
+
+    <TextView
+        android:id="@+id/new_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create A New Account ?"
+        android:textColor="#A5A5A5"
+        android:layout_marginBottom="7dp"/>
+
+
+
+
+
+</LinearLayout>
